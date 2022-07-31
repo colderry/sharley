@@ -18,13 +18,12 @@ class Server {
 		applyMiddlewares(this.app);
 		setupStrategies();
 
-		// Init routes & controllers
-		this.controllers();
-		this.routes();
+		// Controllers & Routes
+		this.controllers().then(() => this.routes());
 	}
 
-	public async controllers (): Promise<void> {
-		await Controller.setAll();
+	public async controllers (): Promise<Controller> {
+		return Controller.setAll();
 	}
 
 	public routes (app = this.app): void {
