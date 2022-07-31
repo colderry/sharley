@@ -3,31 +3,24 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
 
-// Controller
-import controller from "../controllers";
-// Functions
+import Controller from "../controllers";
 import setupRoutes from "../functions/setup-routes";
-
-function initDB (): void {
-	mongoose.connection.on("open", () => {
-		console.log(`Worker: ${process.pid} | MongoDB was connected`);
-	});
-
-	mongoose.connect(process.env.MongoDB);
-}
 
 class Server {
 	public app = express();
 	public port = process.env.PORT || 3000;
 
 	public constructor () {
-		this.controllers().then(() => {
-			this.routes();
-		});
+		// Middlewares
+		this.app.use(express.json());
+
+		// Init routes & controllers
+		this.controllers();
+		this.routes();
 	}
 
 	public async controllers (): Promise<void> {
-		return controller.setup();
+		await Controller.setAll();
 	}
 
 	public routes (app = this.app): void {
@@ -50,6 +43,14 @@ class Server {
 
 		return this;
 	}
+}
+
+function initDB (): void {
+	mongoose.connection.on("open", () => {
+		console.log(`Worker: ${process.pid} | MongoDB was connected`);
+	});
+
+	mongoose.connect(process.env.MongoDB);
 }
 
 export function start () {
