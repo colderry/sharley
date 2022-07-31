@@ -1,5 +1,5 @@
 {
-  "name": "sharly",
+  "name": "sharley",
   "version": "1.0.0",
   "description": "Yet another link shortener.",
   "main": "./dist/index.js",
