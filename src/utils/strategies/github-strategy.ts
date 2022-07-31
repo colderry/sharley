@@ -1,5 +1,5 @@
 import { Strategy } from "passport-github2";
-import { User } from "../../db";
+import { User } from "../../data";
 import axios from "axios";
 
 const callback = async (
