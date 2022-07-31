@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
 
+// Controller
+import controller from "../controllers";
 // Functions
 import setupRoutes from "../functions/setup-routes";
 
@@ -19,10 +21,16 @@ class Server {
 	public port = process.env.PORT || 3000;
 
 	public constructor () {
-		this.routes();
+		this.controllers().then(() => {
+			this.routes();
+		});
 	}
 
-	public routes (app = this.app) {
+	public async controllers (): Promise<void> {
+		return controller.setup();
+	}
+
+	public routes (app = this.app): void {
 		setupRoutes(app, {
 			ver: "v1",
 			route: { includeVer: false }
