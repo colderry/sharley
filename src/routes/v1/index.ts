@@ -1,6 +1,9 @@
 import { Router } from "express";
-import hello from "./henlo";
+import AuthRoute from "./auth-route";
+import Henlo from "./henlo";
+
 const router = Router();
-router.use("/", hello);
+router.use("/", Henlo);
+router.use("/auth", AuthRoute);
 
 export default router;

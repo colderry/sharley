@@ -5,6 +5,10 @@ dotenv.config();
 
 import Controller from "../controllers";
 import setupRoutes from "../functions/setup-routes";
+import applyMiddlewares from "../functions/apply-middlewares";
+
+// This module will setup passport strategies for use
+import "./strategies";
 
 class Server {
 	public app = express();
@@ -12,7 +16,7 @@ class Server {
 
 	public constructor () {
 		// Middlewares
-		this.app.use(express.json());
+		applyMiddlewares(this.app);
 
 		// Init routes & controllers
 		this.controllers();
