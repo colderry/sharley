@@ -4,7 +4,7 @@ const UserSchema = new Schema({
 	_id: Number,
 
 	api: {
-		key: {
+		token: {
 			type: String,
 			required: true
 		}
@@ -61,7 +61,7 @@ export interface UserDocument extends Document {
 }
 
 export interface UserDocumentApi {
-	key: string
+	token: string
 }
 
 export default mongoose.models.users || model<UserDocument>("users", UserSchema);

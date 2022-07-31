@@ -13,6 +13,20 @@ export class User {
 		return user;
 	}
 
+	public static async getByToken (token: string) {
+		const user = await UserModel.findOne({
+			api: {
+				token
+			}
+		});
+
+		if (!user) {
+			return false;
+		} else {
+			return user;
+		}
+	}
+
 	public static async create (data: {
 		username: string;
 		email: string;
@@ -27,20 +41,22 @@ export class User {
 			password: data.password ?? null,
 			signup_type: data.signup_type ?? "sharley",
 			avatar: data.avatar ?? null,
-			api: { key: User.createApiKey() }
+			api: {
+				token: User.createApiToken()
+			}
 		}).save();
 
 		return User.get(data.email, true);
 	}
 
-	public static createApiKey (ln = 60) {
+	public static createApiToken (ln = 60) {
 		const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		let key = "shy_";
+		let token = "shy_";
 
 		for (let i = 0; i < ln; i++) {
-			key += chars[Math.floor(Math.random() * chars.length)];
+			token += chars[Math.floor(Math.random() * chars.length)];
 		}
 
-		return key;
+		return token;
 	}
 }
