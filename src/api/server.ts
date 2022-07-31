@@ -3,20 +3,20 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
 
-import Controller from "../controllers";
-import setupRoutes from "../functions/setup-routes";
-import applyMiddlewares from "../functions/apply-middlewares";
+import Controller from "./controllers";
 
-// This module will setup passport strategies for use
-import "./strategies";
+import applyMiddlewares from "./functions/apply-middlewares";
+import setupRoutes from "./functions/setup-routes";
+import setupStrategies from "./functions/setup-strategies";
 
 class Server {
 	public app = express();
 	public port = process.env.PORT || 3000;
 
 	public constructor () {
-		// Middlewares
+		// Middlewares & Strategies
 		applyMiddlewares(this.app);
+		setupStrategies();
 
 		// Init routes & controllers
 		this.controllers();

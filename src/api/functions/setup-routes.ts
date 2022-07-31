@@ -4,7 +4,7 @@ import path from "path";
 
 export default function (app: Application, options: setupOptions) {
 	const { ver, route = { includeVer: true } } = options;
-	const routes = glob.sync(`./dist/routes/${ver}/**/*.js`);
+	const routes = glob.sync(`./dist/api/routes/${ver}/**/*.js`);
 
 	routes.forEach((p: string) => {
 		if (path.basename(p, ".js") === "index") {
