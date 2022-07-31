@@ -1,6 +1,5 @@
 import { Strategy } from "passport-github2";
-import UserModel from "../../models/user-model";
-import createUser from "../create-user";
+import { User } from "../../db";
 import axios from "axios";
 
 const callback = async (
@@ -17,12 +16,14 @@ const callback = async (
 		});
 
 		const { email } = [...res.data].find((v) => v.primary === true);
-		let user = await UserModel.findOne({ email });
-
+		let user = await User.get(email, true);
+		
 		if (!user) {
-			user = await createUser({
+			user = await User.create({
 				username: profile.username,
-				email, avatar: profile.avatar
+				email: email,
+				avatar: profile.photos[0].value,
+				signup_type: "github"
 			});
 		}
 
