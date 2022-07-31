@@ -34,7 +34,7 @@ class Controller {
 		const dirs = getDirectories();
 
 		dirs.forEach((dir) => {
-			const contrs = glob.sync(`./dist/controllers/${dir}/**.js`, { nodir: true });
+			const contrs = glob.sync(`./dist/api/controllers/${dir}/**.js`, { nodir: true });
 
 			contrs.forEach(async (filePath) => {
 				let file = await import(path.resolve(filePath));
