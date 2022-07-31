@@ -30,7 +30,7 @@ class Controller {
 		}
 	}
 
-	public static async setup () {
+	public static async setAll () {
 		const dirs = getDirectories();
 
 		dirs.forEach((dir) => {
@@ -47,6 +47,8 @@ class Controller {
 				Controller.set(name, dir, file);
 			});
 		});
+
+		return this;
 	}
 }
 
