@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import path from "path";
 dotenv.config();
 
 import Controller from "./controllers";
@@ -8,18 +9,25 @@ import Controller from "./controllers";
 import applyMiddlewares from "./functions/apply-middlewares";
 import setupRoutes from "./functions/setup-routes";
 import setupStrategies from "./functions/setup-strategies";
+import renderPage from "./functions/render-page";
 
 class Server {
 	public app = express();
 	public port = process.env.PORT || 3000;
 
 	public constructor () {
+		// Set view engine and stuffs
+		this.app.set("view engine", "ejs");
+		this.app.set("views", path.join("views"));
+		this.app.use(express.static(path.join("public")));
+
 		// Middlewares & Strategies
 		applyMiddlewares(this.app);
 		setupStrategies();
 
-		// Controllers & Routes
+		// Controllers & Routes & Pages
 		this.controllers().then(() => this.routes());
+		this.pages(this.app);
 	}
 
 	public async controllers (): Promise<Controller> {
@@ -34,6 +42,13 @@ class Server {
 
 		setupRoutes(app, {
 			ver: "v1"
+		});
+	}
+
+	public pages (app = this.app): void {
+		renderPage(app, {
+			path: "/",
+			file: "index"
 		});
 	}
 
