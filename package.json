@@ -14,6 +14,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@codedipper/random-code": "^3.0.1",
     "axios": "^0.27.2",
     "cookie-session": "^2.0.0",
     "dotenv": "^16.0.1",

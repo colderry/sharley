@@ -1,4 +1,5 @@
 import UserModel, { UserDocument } from "../models/user-model";
+import randomCode from "@codedipper/random-code";
 
 export class User {
 	public static async get (id: string, email = false) {
@@ -50,14 +51,7 @@ export class User {
 	}
 
 	public static createApiToken (ln = 60) {
-		const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		let token = "shy_";
-
-		for (let i = 0; i < ln; i++) {
-			token += chars[Math.floor(Math.random() * chars.length)];
-		}
-
-		return token;
+		return `shy_${randomCode(ln, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")}`;
 	}
 
 	public static secure (data: UserDocument) {
