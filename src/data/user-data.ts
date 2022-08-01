@@ -1,4 +1,4 @@
-import UserModel from "../models/user-model";
+import UserModel, { UserDocument } from "../models/user-model";
 
 export class User {
 	public static async get (id: string, email = false) {
@@ -58,5 +58,14 @@ export class User {
 		}
 
 		return token;
+	}
+
+	public static secure (data: UserDocument) {
+		return {
+			id: data._id,
+			username: data.username,
+			signup_type: data.signup_type,
+			avatar: data.avatar
+		}
 	}
 }

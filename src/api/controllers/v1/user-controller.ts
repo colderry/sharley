@@ -1,7 +1,11 @@
-// import UserModel from "../../models/user-model";
+import { Request, Response } from "express";
+import { User } from "../../../data";
 
-// class UserController {
-// 	static authRegister
-// }
-export default function () {}
-// export default UserController;
+class V1UserController {
+	public static async getSelf (req: Request, res: Response) {
+		const user = User.secure(res.locals.user);
+		return res.status(200).json(user);
+	}
+}
+
+export default V1UserController;
